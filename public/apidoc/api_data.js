@@ -1,0 +1,1026 @@
+define({ "api": [
+  {
+    "type": "post",
+    "url": "/auth",
+    "title": "Authentication Token",
+    "group": "Credentials",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Content-Type\": \"application/json\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User email</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>User password</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n  \"email\": \"alice@umbrellacorp.com\",\n  \"password\": \"pwd123\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{ \n  \"token\": \"xyz.abc.123.hgf\"\n  \"expire\": \"2019-04-25T14:50:10.808-03:00\",\n  \"userId\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Authentication error",
+          "content": "HTTP/1.1 401 Unauthorized",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/auth.js",
+    "groupTitle": "Credentials",
+    "name": "PostAuth"
+  },
+  {
+    "type": "delete",
+    "url": "/movies/:id",
+    "title": "Remove a movie",
+    "group": "Movies",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Authorization\": \"JWT xyz.abc.123.hgf\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "id",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Movie id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 204 No Content",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Movie not found error",
+          "content": "HTTP/1.1 404 Not Found",
+          "type": "json"
+        },
+        {
+          "title": "Find error",
+          "content": "HTTP/1.1 412 Precondition Failed",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/movies.js",
+    "groupTitle": "Movies",
+    "name": "DeleteMoviesId"
+  },
+  {
+    "type": "get",
+    "url": "/movies",
+    "title": "List of movies",
+    "group": "Movies",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Authorization\": \"JWT xyz.abc.123.hgf\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Movie title</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "movies",
+            "description": "<p>Movie's list</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "movies.title",
+            "description": "<p>Movie title</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "movies.status",
+            "description": "<p>Status</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "movies.year",
+            "description": "<p>Year</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "movies.cast",
+            "description": "<p>Cast</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "movies.release_date",
+            "description": "<p>Release Date</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "movies.cover",
+            "description": "<p>Cover image</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "movies.overview",
+            "description": "<p>Overview</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n[{\n  \"id\": 1,\n  \"title\": \"Zombieland\",\n  \"year\": 2009,\n  \"cast\": [\"Emma Stone\", \"Bill Murray\"],\n  \"release_date\": \"2009-01-04\",\n  \"status\": \"Active\",\n  \"cover\": \"zombieland.jpg\",\n  \"overview\": \"Two months have passed since a strain of mad cow disease mutated into (mad person disease) that became (mad zombie disease), which overran the entire United States, turning American people into vicious zombies.\"\n  \"updated_at\": \"2016-02-10T15:46:51.778Z\",\n  \"created_at\": \"2016-02-10T15:46:51.778Z\",\n}]",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "List error",
+          "content": "HTTP/1.1 412 Precondition Failed",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/movies.js",
+    "groupTitle": "Movies",
+    "name": "GetMovies"
+  },
+  {
+    "type": "get",
+    "url": "/movies/:id",
+    "title": "Get a movie",
+    "group": "Movies",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Authorization\": \"JWT xyz.abc.123.hgf\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "id",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Movie id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"title\": \"Zombieland\",\n  \"year\": 2009,\n  \"cast\": [\"Emma Stone\", \"Bill Murray\"],\n  \"release_date\": \"2009-01-04\",\n  \"status\": \"Active\",\n  \"cover\": \"zombieland.jpg\",\n  \"overview\": \"Two months have passed since a strain of mad cow disease mutated into (mad person disease) that became (mad zombie disease), which overran the entire United States, turning American people into vicious zombies.\"\n  \"updated_at\": \"2016-02-10T15:46:51.778Z\",\n  \"created_at\": \"2016-02-10T15:46:51.778Z\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Movie not found error",
+          "content": "HTTP/1.1 404 Not Found",
+          "type": "json"
+        },
+        {
+          "title": "Find error",
+          "content": "HTTP/1.1 412 Precondition Failed",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/movies.js",
+    "groupTitle": "Movies",
+    "name": "GetMoviesId"
+  },
+  {
+    "type": "post",
+    "url": "/movies",
+    "title": "Create a new movie",
+    "group": "Movies",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Authorization\": \"JWT xyz.abc.123.hgf\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Movie title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "year",
+            "description": "<p>Year</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "cast",
+            "description": "<p>Cast</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "release_date",
+            "description": "<p>Release Date</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "cover",
+            "description": "<p>Cover image</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "overview",
+            "description": "<p>Overview</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n    \"title\": \"Zombieland\",\n    \"year\": 2009,\n    \"cast\": [\"Emma Stone\", \"Bill Murray\"],\n    \"release_date\": \"2009-01-04\",\n    \"status\": \"Active\",\n    \"cover\": \"zombieland.jpg\",\n    \"overview\": \"Two months have passed since a strain of mad cow disease mutated into (mad person disease) that became (mad zombie disease), which overran the entire United States, turning American people into vicious zombies.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Movie id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Register error",
+          "content": "HTTP/1.1 412 Precondition Failed",
+          "type": "json"
+        },
+        {
+          "title": "Unique",
+          "content": "HTTP/1.1 409 Conflict\n{\n  \"msg: \"title must be unique\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Field not Empty or Null",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"msg: \"Oops! title cannot be empty\"\n  \"msg: \"Oops! status cannot be empty\"\n  \"msg: \"Oops! year cannot be empty\"\n  \"msg: \"Oops! release_date cannot be empty\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/movies.js",
+    "groupTitle": "Movies",
+    "name": "PostMovies"
+  },
+  {
+    "type": "put",
+    "url": "/movies/:id",
+    "title": "Update a movie",
+    "group": "Movies",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Authorization\": \"JWT xyz.abc.123.hgf\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>Movie title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "year",
+            "description": "<p>Year</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Array",
+            "optional": false,
+            "field": "cast",
+            "description": "<p>Cast</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "release_date",
+            "description": "<p>Release Date</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "status",
+            "description": "<p>Status</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "cover",
+            "description": "<p>Cover image</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "overview",
+            "description": "<p>Overview</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n  \"title\": \"Zombieland\",\n  \"year\": 2009,\n  \"cast\": [\"Emma Stone\", \"Bill Murray\"],\n  \"release_date\": \"2009-01-04\",\n  \"status\": \"Active\",\n  \"cover\": \"zombieland.jpg\",\n  \"overview\": \"Two months have passed since a strain of mad cow disease mutated into (mad person disease) that became (mad zombie disease), which overran the entire United States, turning American people into vicious zombies.\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 204 No Content",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Register error",
+          "content": "HTTP/1.1 412 Precondition Failed",
+          "type": "json"
+        },
+        {
+          "title": "Unique",
+          "content": "HTTP/1.1 409 Conflict\n{\n  \"msg: \"title must be unique\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Field not Empty or Null",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"msg: \"Oops! title cannot be empty\"\n  \"msg: \"Oops! status cannot be empty\"\n  \"msg: \"Oops! year cannot be empty\"\n  \"msg: \"Oops! release_date cannot be empty\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/movies.js",
+    "groupTitle": "Movies",
+    "name": "PutMoviesId"
+  },
+  {
+    "type": "delete",
+    "url": "/users/:id",
+    "title": "Delete a user",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Authorization\": \"JWT xyz.abc.123.hgf\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 204 No Content",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "User not found error",
+          "content": "HTTP/1.1 404 Not Found",
+          "type": "json"
+        },
+        {
+          "title": "Delete error",
+          "content": "HTTP/1.1 412 Precondition Failed",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User",
+    "name": "DeleteUsersId"
+  },
+  {
+    "type": "get",
+    "url": "/users/:id",
+    "title": "Read data of a User",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>header tells the client what the content type of the returned content actually is</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Content-Type\": \"application/json\"}\n{\"Authorization\": \"JWT xyz.abc.123.hgf\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>User id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>User name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User email</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"name\": \"Alice\",\n  \"email\": \"alice@umbrellacorp.com\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "User not found error",
+          "content": "HTTP/1.1 404 Not Found",
+          "type": "json"
+        },
+        {
+          "title": "Get error",
+          "content": "HTTP/1.1 412 Precondition Failed",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User",
+    "name": "GetUsersId"
+  },
+  {
+    "type": "post",
+    "url": "/user",
+    "title": "Create a new User",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>header tells the client what the content type of the returned content actually is</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Content-Type\": \"application/json\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "full_name",
+            "description": "<p>User Full name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User email</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>User password</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n  \"full_name\": \"Alice\",\n  \"email\": \"alice@umbrellacorp.com\",\n  \"password\": \"pwd123\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>User id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "full_name",
+            "description": "<p>User Full name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User email</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>User encrypted password</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "updated_at",
+            "description": "<p>Update's date</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "created_at",
+            "description": "<p>Register's date</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"full_name\": \"Alice\",\n  \"email\": \"alice@umbrellacorp.com\",\n  \"password\": \"$2a$10$SK1B1\",\n  \"updated_at\": \"2016-02-10T15:20:11.700Z\",\n  \"created_at\": \"2016-02-10T15:29:11.700Z\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DuplicateEmail",
+            "description": "<p>Email can not duplicated.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "WrongEmail",
+            "description": "<p>Email should be valid</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotEmpty",
+            "description": "<p>Name, email and password is not empty</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotNull",
+            "description": "<p>Name, email and password is not null</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "DuplicateEmail:",
+          "content": "HTTP/1.1 409 Conflit\n{\n  \"msg\": \"Oops. Looks like you already have an account with this email address.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "WrongEmail:",
+          "content": "HTTP/1.1 412 Precondition Failed\n{\n  \"msg\": \"Oops. You entered a wrong email.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotEmpty:",
+          "content": "HTTP/1.1 412 Precondition Failed\n{\n  \"msg\": \"Validation notEmpty failed\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotNull:",
+          "content": "HTTP/1.1 412 Precondition Failed\n{\n  \"msg\": \"Field cannot be null\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User",
+    "name": "PostUser"
+  },
+  {
+    "type": "put",
+    "url": "/users/:id",
+    "title": "Update a user",
+    "group": "User",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Token of authenticated user</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header",
+          "content": "{\"Authorization\": \"JWT xyz.abc.123.hgf\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "full_name",
+            "description": "<p>User Full name</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User email</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "password",
+            "description": "<p>User password</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Input",
+          "content": "{\n  \"full_name\": \"Alice\",\n  \"email\": \"alice@umbrellacorp.com\",\n  \"password\": \"pwd123\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success",
+          "content": "HTTP/1.1 204 No Content",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "DuplicateEmail",
+            "description": "<p>Email can not duplicated.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "WrongEmail",
+            "description": "<p>Email should be valid</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotEmpty",
+            "description": "<p>Name, email and password is not empty</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "NotNull",
+            "description": "<p>Name, email and password is not null</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "DuplicateEmail:",
+          "content": "HTTP/1.1 409 Conflit\n{\n  \"msg\": \"Oops. Looks like you already have an account with this email address.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "WrongEmail:",
+          "content": "HTTP/1.1 412 Precondition Failed\n{\n  \"msg\": \"Oops. You entered a wrong email.\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotEmpty:",
+          "content": "HTTP/1.1 412 Precondition Failed\n{\n  \"msg\": \"Validation notEmpty failed\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "NotNull:",
+          "content": "HTTP/1.1 412 Precondition Failed\n{\n  \"msg\": \"Field cannot be null\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User",
+    "name": "PutUsersId"
+  }
+] });
